@@ -1,6 +1,6 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+from selenium.webdriver.support.select import Select
 
 class BaseElement(object):
     def __init__(self, driver, locator):
@@ -37,3 +37,8 @@ class BaseElement(object):
         text = self.web_element.text
         return text
 
+    @property
+    def options(self):
+        selected_element = Select(self.web_element)
+        list_of_options = [element.text for element in selected_element.options]
+        return list_of_options

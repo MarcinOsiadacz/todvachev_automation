@@ -12,3 +12,4 @@ class CategoryPage(BasePage):
     def category_dropdown(self):
         locator = (By.CSS_SELECTOR, 'select#cat')
         return BaseElement(self.driver, locator=locator)
+
