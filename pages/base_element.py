@@ -29,6 +29,10 @@ class BaseElement(object):
         self.web_element.send_keys(text)
         return None
 
+    def clear(self):
+        self.web_element.clear()
+        return None
+
     def attribute(self, attribute_name):
         attribute = self.web_element.get_attribute(attribute_name)
         return attribute
@@ -39,7 +43,9 @@ class BaseElement(object):
         return text
 
     @property
-    def options(self):
+    def dropdown_options(self):
         selected_element = Select(self.web_element)
         list_of_options = [element.text for element in selected_element.options]
         return list_of_options
+
+

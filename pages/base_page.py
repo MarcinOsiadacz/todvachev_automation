@@ -1,3 +1,6 @@
+from selenium.webdriver.common.alert import Alert
+
+
 class BasePage(object):
 
     url = None
@@ -7,3 +10,8 @@ class BasePage(object):
 
     def go(self):
         self.driver.get(self.url)
+
+    @property
+    def browser_alert(self):
+        alert = Alert(driver=self.driver)
+        return alert
