@@ -1,4 +1,7 @@
 from selenium.webdriver.common.alert import Alert
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 
 class BasePage(object):
@@ -15,3 +18,14 @@ class BasePage(object):
     def browser_alert(self):
         alert = Alert(driver=self.driver)
         return alert
+
+    def is_alert_present(self):
+        wait = WebDriverWait(self.driver, 10)
+        try:
+            wait.until(EC.alert_is_present())
+            alert_state = True
+        except TimeoutException:
+            alert_state = False
+        return alert_state
+
+

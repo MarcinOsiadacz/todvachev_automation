@@ -25,7 +25,7 @@ class BaseElement(object):
         element.click()
         return None
 
-    def input_text(self, text):
+    def enter_text(self, text):
         self.web_element.send_keys(text)
         return None
 
@@ -48,4 +48,7 @@ class BaseElement(object):
         list_of_options = [element.text for element in selected_element.options]
         return list_of_options
 
-
+    @property
+    def get_text(self):
+        text = self.web_element.get_attribute('value')
+        return text

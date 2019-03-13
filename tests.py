@@ -29,24 +29,25 @@ login_page = LoginPage(driver=browser)
 login_page.go()
 
 # Login Button in Login Form test case
-
-assert login_page.login_button.attribute('value') == expected_button_text
+assert login_page.login_button.get_text == expected_button_text
 
 # Username Field in Login Form test case
-login_page.username_input.input_text(Invalid.Username.thirteen_characters())
-assert login_page.username_input.attribute('value') == Invalid.Username.thirteen_characters()
+login_page.username_input.enter_text(Invalid.Username.thirteen_characters())
+assert login_page.username_input.get_text == Invalid.Username.thirteen_characters()
 login_page.login_button.click()
 
+assert login_page.is_alert_present()
 assert login_page.browser_alert.text == expected_incorrect_username_alert
 login_page.browser_alert.accept()
+
 login_page.username_input.clear()
 
 # Test Scenario
 
 # Username field with less than 5 characters and correct password (invalid login)
-login_page.username_input.input_text(Invalid.Username().four_characters())
-login_page.password_input.input_text(Valid.password())
-login_page.repeat_password_input.input_text(Valid.password())
+login_page.username_input.enter_text(Invalid.Username().four_characters())
+login_page.password_input.enter_text(Valid.password())
+login_page.repeat_password_input.enter_text(Valid.password())
 login_page.login_button.click()
 
 assert login_page.browser_alert.text == expected_incorrect_username_alert
@@ -54,7 +55,7 @@ login_page.browser_alert.accept()
 
 # Username field with more than 12 characters and correct password (invalid login)
 login_page.username_input.clear()
-login_page.username_input.input_text(Invalid.Username().thirteen_characters())
+login_page.username_input.enter_text(Invalid.Username().thirteen_characters())
 login_page.login_button.click()
 
 assert login_page.browser_alert.text == expected_incorrect_username_alert
@@ -65,9 +66,9 @@ login_page.username_input.clear()
 login_page.password_input.clear()
 login_page.repeat_password_input.clear()
 
-login_page.username_input.input_text(Valid.username())
-login_page.password_input.input_text(Invalid.Password.four_characters())
-login_page.repeat_password_input.input_text(Invalid.Password.four_characters())
+login_page.username_input.enter_text(Valid.username())
+login_page.password_input.enter_text(Invalid.Password.four_characters())
+login_page.repeat_password_input.enter_text(Invalid.Password.four_characters())
 login_page.login_button.click()
 
 assert login_page.browser_alert.text == expected_incorrect_password_alert
@@ -77,8 +78,8 @@ login_page.browser_alert.accept()
 login_page.password_input.clear()
 login_page.repeat_password_input.clear()
 
-login_page.password_input.input_text(Valid.password())
-login_page.repeat_password_input.input_text(Invalid.Password.four_characters())
+login_page.password_input.enter_text(Valid.password())
+login_page.repeat_password_input.enter_text(Invalid.Password.four_characters())
 login_page.login_button.click()
 
 assert login_page.browser_alert.text == expected_different_passwords_alert
@@ -88,12 +89,11 @@ login_page.browser_alert.accept()
 login_page.password_input.clear()
 login_page.repeat_password_input.clear()
 
-login_page.password_input.input_text(Valid.password())
-login_page.repeat_password_input.input_text(Valid.password())
+login_page.password_input.enter_text(Valid.password())
+login_page.repeat_password_input.enter_text(Valid.password())
 login_page.login_button.click()
 
 assert login_page.browser_alert.text == expected_successful_login_alert
 login_page.browser_alert.accept()
 
-input()
 browser.quit()
