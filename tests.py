@@ -2,6 +2,7 @@ from selenium import webdriver
 
 from pages.category_page import CategoryPage
 from pages.login_page import LoginPage
+from pages.register_page import RegisterPage
 from pages.credentials import Valid
 from pages.credentials import Invalid
 
@@ -96,4 +97,22 @@ login_page.login_button.click()
 assert login_page.browser_alert.text == expected_successful_login_alert
 login_page.browser_alert.accept()
 
+# Register Form Test Scenario
+
+register_page = RegisterPage(driver=browser)
+register_page.go()
+
+# Test Ride
+register_page.user_id_input.enter_text(Valid.username())
+register_page.password_input.enter_text(Valid.password())
+register_page.name_input.enter_text(Valid.username())
+register_page.address_input.enter_text('testaddress')
+register_page.country_select_usa()
+register_page.zip_code_input.enter_text('12345')
+register_page.email_input.enter_text(Valid.email())
+# register_page.male_checkbox.click()
+# register_page.language_checkbox.click()
+register_page.register_button.click()
+
+input()
 browser.quit()

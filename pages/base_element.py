@@ -52,3 +52,9 @@ class BaseElement(object):
     def get_text(self):
         text = self.web_element.get_attribute('value')
         return text
+
+    def select_option_by_value(self, value):
+        selected_element = Select(self.web_element)
+        selected_element.select_by_value(value)
+        return None
+
