@@ -16,8 +16,18 @@ class RegisterPage(BasePage):
         return BaseElement(self.driver, locator)
 
     @property
+    def user_id_label(self):
+        locator = Locator(by=By.XPATH, value='//label[@for="userid"]')
+        return BaseElement(self.driver, locator)
+
+    @property
     def password_input(self):
         locator = Locator(by=By.NAME, value='passid')
+        return BaseElement(self.driver, locator)
+
+    @property
+    def password_label(self):
+        locator = Locator(by=By.XPATH, value='//label[@for="passid"]')
         return BaseElement(self.driver, locator)
 
     @property
@@ -26,8 +36,18 @@ class RegisterPage(BasePage):
         return BaseElement(self.driver, locator)
 
     @property
+    def name_label(self):
+        locator = Locator(by=By.XPATH, value='//label[@for="username"]')
+        return BaseElement(self.driver, locator)
+
+    @property
     def country_selection_dropdown(self):
         locator = Locator(by=By.CSS_SELECTOR, value='select[name="country"]')
+        return BaseElement(self.driver, locator)
+
+    @property
+    def country_selection_label(self):
+        locator = Locator(by=By.XPATH, value='//label[@for="country"]')
         return BaseElement(self.driver, locator)
 
     @property
@@ -36,13 +56,28 @@ class RegisterPage(BasePage):
         return BaseElement(self.driver, locator)
 
     @property
+    def address_label(self):
+        locator = Locator(by=By.XPATH, value='//label[@for="address"]')
+        return BaseElement(self.driver, locator)
+
+    @property
     def zip_code_input(self):
         locator = Locator(by=By.NAME, value='zip')
         return BaseElement(self.driver, locator)
 
     @property
+    def zip_code_label(self):
+        locator = Locator(by=By.XPATH, value='//label[@for="zip"]')
+        return BaseElement(self.driver, locator)
+
+    @property
     def email_input(self):
         locator = Locator(by=By.NAME, value='email')
+        return BaseElement(self.driver, locator)
+
+    @property
+    def email_label(self):
+        locator = Locator(by=By.XPATH, value='//label[@for="email"]')
         return BaseElement(self.driver, locator)
 
     @property
@@ -56,13 +91,28 @@ class RegisterPage(BasePage):
         return BaseElement(self.driver, locator)
 
     @property
-    def language_checkbox(self):
+    def sex_selection_label(self):
+        locator = Locator(by=By.CSS_SELECTOR, value='label#gender')
+        return BaseElement(self.driver, locator)
+
+    @property
+    def english_checkbox(self):
         locator = Locator(by=By.NAME, value='languageQuestion')
+        return BaseElement(self.driver, locator)
+
+    @property
+    def english_checkbox_label(self):
+        locator = Locator(by=By.XPATH, value='//*[@id="post-70"]/div/form/ul/li[18]/label')
         return BaseElement(self.driver, locator)
 
     @property
     def about_input(self):
         locator = Locator(by=By.CSS_SELECTOR, value='textarea#desc')
+        return BaseElement(self.driver, locator)
+
+    @property
+    def about_label(self):
+        locator = Locator(by=By.XPATH, value='//label[@for="desc"]')
         return BaseElement(self.driver, locator)
 
     @property
@@ -79,3 +129,8 @@ class RegisterPage(BasePage):
         dropdown = self.country_selection_dropdown
         dropdown.select_option_by_value('Default')
         return None
+
+    @property
+    def country_dropdown(self):
+        locator = Locator(By.CSS_SELECTOR, 'select[name="country"]')
+        return BaseElement(self.driver, locator=locator)

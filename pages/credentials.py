@@ -11,6 +11,14 @@ class Valid:
     def email():
         return 'example@example.com'
 
+    @staticmethod
+    def name():
+        return 'Test'
+
+    @staticmethod
+    def zip_code():
+        return '66666'
+
 
 class Invalid:
     class Username:

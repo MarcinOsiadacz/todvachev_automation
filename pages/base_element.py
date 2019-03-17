@@ -1,6 +1,7 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
+from selenium.common.exceptions import TimeoutException
 
 
 class BaseElement(object):
@@ -58,3 +59,11 @@ class BaseElement(object):
         selected_element.select_by_value(value)
         return None
 
+    def is_clickable(self):
+        wait = WebDriverWait(self.driver, 10)
+        try:
+            wait.until(EC.element_to_be_clickable())
+            element_state = True
+        except TimeoutException:
+            element_state = False
+        return element_state
