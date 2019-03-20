@@ -28,4 +28,11 @@ class BasePage(object):
             alert_state = False
         return alert_state
 
-
+    def do_current_url_matches(self, expected_url):
+        wait = WebDriverWait(self.driver, 10)
+        try:
+            wait.until(EC.url_to_be(expected_url))
+            url_state = True
+        except TimeoutException:
+            url_state = False
+        return url_state

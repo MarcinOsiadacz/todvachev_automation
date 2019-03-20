@@ -59,6 +59,12 @@ class BaseElement(object):
         selected_element.select_by_value(value)
         return None
 
+    @property
+    def currently_selected_option_text(self):
+        selected_element = Select(self.web_element)
+        text = selected_element.first_selected_option.text
+        return text
+
     def is_clickable(self):
         wait = WebDriverWait(self.driver, 10)
         try:
@@ -67,3 +73,8 @@ class BaseElement(object):
         except TimeoutException:
             element_state = False
         return element_state
+
+    def is_selected(self):
+        state = self.web_element.get_attribute("checked")
+        return state
+

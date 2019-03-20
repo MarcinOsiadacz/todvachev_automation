@@ -115,14 +115,23 @@ expected_sex_selection_label_txt = 'Sex:'
 expected_english_checkbox_label_txt = 'English:'
 expected_about_label_txt = 'About:'
 
-# Alerts
+# Expected results
 expected_incorrect_userid_alert = 'User Id should not be empty / length be between 5 to 12'
 expected_incorrect_passid_alert = 'Password should not be empty / length be between 7 to 12'
 expected_incorrect_name_alert = 'Username must have alphabet characters only'
 expected_incorrect_address_alert = 'User address must have alphanumeric characters only'
-expected_country_not_selected_alert =r'Select your country from the list'
+expected_country_not_selected_alert = r'Select your country from the list'
+expected_country_selected = 'USA'
 expected_incorrect_zipcode_alert = 'ZIP code must have numeric characters only'
 expected_incorrect_email_alert = 'You have entered an invalid email address!'
+example_about = 'Lorem Ipsum Lorem Ipsum, Lorem Ipsum.'
+expected_url = 'http://testing.todvachev.com/test-scenarios/register-form/?userid=asdf1&passid=asdf1234%21&username' \
+               '=Asdf&address=Street1&country=AD&zip=12345&email=example%40example.com&sex=Male&desc=Lorem+Ipsum' \
+               '+Lorem+Ipsum%2C+Lorem+Ipsum.&submit=REGISTER'
+
+
+
+#expected_url_two = 'http://testing.todvachev.com/test-scenarios/register-form/?userid=asdf1&passid=asdf1234%21&username=Asdf&address=Street1&country=AD&zip=12345&email=example%40example.com&sex=Male&desc=Lorem+Ipsum+Lorem+Ipsum%2C+Lorem+Ipsum.&submit=REGISTER'
 
 # Test Ride
 # Verifying labels
@@ -148,18 +157,178 @@ assert register_page.male_checkbox.is_clickable
 assert register_page.female_checkbox.is_clickable
 assert register_page.english_checkbox.is_clickable
 
-
-register_page.user_id_input.enter_text(Valid.username())
-register_page.password_input.enter_text(Valid.password())
-register_page.name_input.enter_text(Valid.username())
-register_page.address_input.enter_text(Valid.name())
-register_page.country_select_usa()
-register_page.zip_code_input.enter_text(Valid.zip_code())
-register_page.email_input.enter_text(Valid.email())
-register_page.male_checkbox.click()
-register_page.english_checkbox.click()
+# All fields empty
 register_page.register_button.click()
 
+assert register_page.browser_alert.text == expected_incorrect_userid_alert
+register_page.browser_alert.accept()
 
-input()
+# All Invalid data
+# Incorrect user id - shorter than 5 characters
+register_page.user_id_input.enter_text(Invalid.UserID.four_characters())
+register_page.register_button.click()
+
+assert register_page.browser_alert.text == expected_incorrect_userid_alert
+register_page.browser_alert.accept()
+
+# Incorrect user id - longer than 12 characters
+register_page.user_id_input.clear()
+register_page.user_id_input.enter_text(Invalid.UserID.thirteen_characters())
+register_page.register_button.click()
+
+assert register_page.browser_alert.text == expected_incorrect_userid_alert
+register_page.browser_alert.accept()
+
+# Changing to valid user id
+register_page.user_id_input.clear()
+register_page.user_id_input.enter_text(Valid.user_id())
+
+# Incorrect password - shorter than 7 characters
+register_page.password_input.enter_text(Invalid.Password.four_characters())
+register_page.register_button.click()
+
+assert register_page.browser_alert.text == expected_incorrect_passid_alert
+register_page.browser_alert.accept()
+
+# Incorrect password - longer than 12 characters
+register_page.password_input.clear()
+register_page.password_input.enter_text(Invalid.Password.thirteen_characters())
+register_page.register_button.click()
+
+assert register_page.browser_alert.text == expected_incorrect_passid_alert
+register_page.browser_alert.accept()
+
+# Changing to valid password
+register_page.password_input.clear()
+register_page.password_input.enter_text(Valid.password())
+
+# Incorrect name (including digits)
+register_page.name_input.enter_text(Invalid.Name.with_digits())
+register_page.register_button.click()
+
+assert register_page.browser_alert.text == expected_incorrect_name_alert
+register_page.browser_alert.accept()
+
+# Changing to valid name
+register_page.name_input.clear()
+register_page.name_input.enter_text(Valid.name())
+
+# Incorrect address
+register_page.address_input.enter_text(Invalid.Address.with_special_symbols())
+register_page.register_button.click()
+
+assert register_page.browser_alert.text == expected_incorrect_address_alert
+register_page.browser_alert.accept()
+
+# Changing to valid address
+register_page.address_input.clear()
+register_page.address_input.enter_text(Valid.address())
+
+# Country not selected
+register_page.no_country_selected()
+register_page.register_button.click()
+
+assert register_page.browser_alert.text == expected_country_not_selected_alert
+register_page.browser_alert.accept()
+
+# Selecting a country
+register_page.country_select_usa()
+assert register_page.country_selection_dropdown.currently_selected_option_text == \
+       expected_country_selected
+
+# Incorrect ZIP Code
+# Zip Code with special symbols
+register_page.zip_code_input.enter_text(Invalid.ZipCode.with_special_symbols())
+register_page.register_button.click()
+
+assert register_page.browser_alert.text == expected_incorrect_zipcode_alert
+register_page.browser_alert.accept()
+
+# Zip Code with letters
+register_page.zip_code_input.clear()
+register_page.zip_code_input.enter_text(Invalid.ZipCode.with_letters())
+
+register_page.register_button.click()
+
+assert register_page.browser_alert.text == expected_incorrect_zipcode_alert
+register_page.browser_alert.accept()
+
+# Zip Code with space
+register_page.zip_code_input.clear()
+register_page.zip_code_input.enter_text(Invalid.ZipCode.with_space())
+
+register_page.register_button.click()
+
+assert register_page.browser_alert.text == expected_incorrect_zipcode_alert
+register_page.browser_alert.accept()
+
+# Changing to valid Zip code
+register_page.zip_code_input.clear()
+register_page.zip_code_input.enter_text(Valid.zip_code())
+
+# Incorrect Email
+# No domain
+register_page.email_input.enter_text(Invalid.Email.no_domain())
+
+register_page.register_button.click()
+
+assert register_page.browser_alert.text == expected_incorrect_email_alert
+register_page.browser_alert.accept()
+
+# No extension
+register_page.email_input.clear()
+register_page.email_input.enter_text(Invalid.Email.no_extension())
+
+register_page.register_button.click()
+
+assert register_page.browser_alert.text == expected_incorrect_email_alert
+register_page.browser_alert.accept()
+
+# No user
+register_page.email_input.clear()
+register_page.email_input.enter_text(Invalid.Email.no_user())
+
+register_page.register_button.click()
+
+assert register_page.browser_alert.text == expected_incorrect_email_alert
+register_page.browser_alert.accept()
+
+# Not at
+register_page.email_input.clear()
+register_page.email_input.enter_text(Invalid.Email.not_at())
+
+register_page.register_button.click()
+
+assert register_page.browser_alert.text == expected_incorrect_email_alert
+register_page.browser_alert.accept()
+
+# Changing to valid Email
+register_page.email_input.clear()
+register_page.email_input.enter_text(Valid.email())
+
+# Sex, English and About are not obligatory
+# Checking Sex selection
+register_page.female_checkbox.click()
+assert register_page.female_checkbox.is_selected()
+
+register_page.male_checkbox.click()
+assert register_page.male_checkbox.is_selected()
+
+# Checking English checkbox
+# Checked by default
+assert register_page.english_checkbox.is_selected()
+
+# Unchecking English checkbox
+register_page.english_checkbox.click()
+assert register_page.english_checkbox.is_selected() is not True
+
+# About
+register_page.about_input.enter_text(example_about)
+assert register_page.about_input.get_text == example_about
+
+# Checking if registration passes
+register_page.register_button.click()
+assert register_page.do_current_url_matches(expected_url)
+
+# Closing the driver
 browser.quit()
