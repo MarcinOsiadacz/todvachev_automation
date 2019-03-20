@@ -120,7 +120,7 @@ expected_incorrect_userid_alert = 'User Id should not be empty / length be betwe
 expected_incorrect_passid_alert = 'Password should not be empty / length be between 7 to 12'
 expected_incorrect_name_alert = 'Username must have alphabet characters only'
 expected_incorrect_address_alert = 'User address must have alphanumeric characters only'
-expected_country_not_selected_alert = r'Select your country from the list'
+expected_country_not_selected_alert = 'Select your country from the list'
 expected_country_selected = 'USA'
 expected_incorrect_zipcode_alert = 'ZIP code must have numeric characters only'
 expected_incorrect_email_alert = 'You have entered an invalid email address!'
@@ -128,10 +128,6 @@ example_about = 'Lorem Ipsum Lorem Ipsum, Lorem Ipsum.'
 expected_url = 'http://testing.todvachev.com/test-scenarios/register-form/?userid=asdf1&passid=asdf1234%21&username' \
                '=Asdf&address=Street1&country=AD&zip=12345&email=example%40example.com&sex=Male&desc=Lorem+Ipsum' \
                '+Lorem+Ipsum%2C+Lorem+Ipsum.&submit=REGISTER'
-
-
-
-#expected_url_two = 'http://testing.todvachev.com/test-scenarios/register-form/?userid=asdf1&passid=asdf1234%21&username=Asdf&address=Street1&country=AD&zip=12345&email=example%40example.com&sex=Male&desc=Lorem+Ipsum+Lorem+Ipsum%2C+Lorem+Ipsum.&submit=REGISTER'
 
 # Test Ride
 # Verifying labels
