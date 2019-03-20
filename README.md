@@ -2,5 +2,11 @@
 
 Automation training with Selenium and Python on http://testing.todvachev.com/
 
-This website is created with the sole purpose of training students 
-that are participants in the author's course to use as a playground for their exercises in the course.
+Test cases:
+-Items in Category Drop Down Menu
+-Login Button in Login Form
+-Username Field in Login Form
+
+Test scenarios:
+-Login Form
+-Register Form
